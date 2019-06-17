@@ -2,13 +2,8 @@
 
 项目名：基础服务— 路由中心
 
-git仓库地址：
-
-​	公司git地址：https://git.schtwz.cn
-
-​	ssh:git@git.schtwz.cn:base/gateway-center.git
-
-​	http:https://git.schtwz.cn/base/gateway-center.git
+1.整合gateway 与 swagger的骚操作
+2.基于gateway的权限控制器
 
 
 ## 2. 如何运行
