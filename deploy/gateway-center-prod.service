@@ -1,0 +1,12 @@
+[Unit]
+Description=gateway-center-prod
+After=network.target
+
+[Service]
+PIDFile=/data/services/prod/gateway-center.pid
+ExecStart=/bin/java "-Dspring.profiles.active=prod"  "-Xmx256m" "-jar" "/data/services/prod/gateway-center.jar"
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

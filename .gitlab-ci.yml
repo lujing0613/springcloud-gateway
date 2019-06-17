@@ -1,0 +1,55 @@
+stages:
+- dev_deploy
+- test_deploy
+- prod_build
+- prod_deploy
+##======================开发环境=====================
+dev_deploy:
+  stage: dev_deploy
+  script:
+  - chmod +x ./gradlew
+  - ./gradlew assemble
+  - mkdir -p /data/services/dev
+  - /bin/cp -f ./build/libs/*.jar  /data/services/dev/gateway-center.jar
+  - sudo /bin/cp -f ./deploy/*-dev.service /etc/systemd/system/
+  - sudo systemctl daemon-reload
+  - sudo systemctl restart gateway-center-dev
+  only:
+  - /^dev-.*$/
+  tags:
+  - 192.168.0.1
+##======================测试环境=====================
+
+test_deploy:
+  stage: test_deploy
+  script:
+  - chmod +x ./gradlew
+  - ./gradlew assemble
+  - mkdir -p /data/services/test
+  - cp -f ./build/libs/*.jar  /data/services/test/gateway-center.jar
+  - cp -f ./deploy/*-test.service /etc/systemd/system/
+  - systemctl daemon-reload
+  - systemctl restart gateway-center-test
+  only:
+  - /^test-.*$/
+  tags:
+  - xx
+ 
+ ##======================生产环境=====================
+
+prod_deploy_xx:
+  stage: prod_deploy
+  script:
+  - mkdir -p /data/services/prod
+  - chmod +x ./gradlew
+  - ./gradlew assemble
+  - cp -f ./build/libs/*.jar  /data/services/prod/gateway-center.jar
+  - sudo /bin/cp -f ./deploy/*-prod.service /etc/systemd/system/
+  - sudo systemctl daemon-reload
+  - sudo systemctl enable gateway-center-prod
+  - sudo systemctl restart gateway-center-prod
+  only:
+  - /^prod-.*$/
+  tags:
+  - xx
+  when: manual

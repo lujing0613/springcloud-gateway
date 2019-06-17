@@ -1,0 +1,12 @@
+[Unit]
+Description=gateway-center-test
+After=network.target
+
+[Service]
+PIDFile=/var/run/services/test/gateway-center.pid
+ExecStart=/bin/java "-Dspring.profiles.active=test" "-Xms256m" "-Xmx256m" "-jar" "/data/services/test/gateway-center.jar"
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target

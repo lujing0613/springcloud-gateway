@@ -1,0 +1,57 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+server:
+  port: 8001
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gateway-center
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启默认转发
+          lower-case-service-id: true
+  datasource:
+    url: jdbc:mysql://localhost/htdrp?characterEncoding=UTF-8&useSSL=true&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MYSQL
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    database: 5
+    timeout: 3000
+    host: 127.0.0.1
+    password:
+    port: 6379
+    tokenTimeout: 3000
+  activemq:
+    broker-url: tcp://localhost:61616
+    in-memory: true
+    pool:
+      enabled: false
+    packages:
+      trust-all: true
+
+hystrix :
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
